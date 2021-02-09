@@ -3,9 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="http://db.onlinewebfonts.com/c/6c24622222a278147bc3107d76bbdfbd?family=Myriad" rel="stylesheet">
+  <link href="style.css" rel="stylesheet"/>
   <script src="main.js" defer></script>
-  <title>Music Search</title>
+  <title>iChoons - an iTunes API search application</title>
 </head>
 <body>
+  <header>
+    <h1>iChoons</h1>
+  </header>
+  <div class="container">
+    <section id="play-bar"></section>
+    <section id="name-title"></section>
+    <form id="search-submit">
+      <input id="search-bar" placeholder="Type the name of the artist/band here" autofocus>
+      <button id="submit-search">SEARCH!</button>
+    </form>
+  </div>
+    <section>
+      <h2>Search Results:</h2>
+      <ul id="results"></ul>
+    </section>
 </body>
 </html>
