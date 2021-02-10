@@ -7,7 +7,6 @@ let searchSubmit = document.querySelector('#search-submit')
 let searchResults = document.querySelector('#results')
 let audioPlayer = document.querySelector('#audio-player-container')
 
-
 // event listeners
 searchSubmit.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -31,22 +30,15 @@ searchSubmit.addEventListener('submit', (event) => {
 })
 
 
+
     
-document.addEventListener('click', e=> {
-    
-        if (e.target.className === ".resultDiv" ) {
-            let audioPlayerContainer = e.target.parentElement.querySelector("#audio-player-container")
-            let audioPlayer = audioPlayerContainer.querySelector('.track')
-    
-            if (audioPlayerContainer.classList.contains('hidden')) {
-                audioPlayerContainer.classList.remove('hidden')
-                audioPlayer.play();
-            }
-            else {
-                audioPlayerContainer.classList.add('hidden')
-                audioPlayer.pause()
-            }
-        }
+searchResults.addEventListener('click', (event) => {
+    event.preventDefault();
+    console.log('clicked', event)
+    console.log(event.target.dataset.songUrl)
+    audioPlayer.src = event.target.dataset.songUrl
+    audioPlayer.autoplay = 'true'
+    audioPlayer.volume = .5;    
     })
 
 
@@ -107,11 +99,17 @@ function renderResults(song) {
         const options = { year: 'numeric'}
         releaseDate.innerHTML = "Year: "+releaseYear.toLocaleDateString('de-DE', options);
 
+    let previewButton = document.createElement('button')
+        previewButton.className = "preview-button"
+        previewButton.innerText ='Play Preview'
+        previewButton.dataset.songUrl = song.previewUrl
+
     resultDiv.appendChild(collectionImg)
     resultDiv.appendChild(artistName)
     resultDiv.appendChild(songTitle)
     resultDiv.appendChild(collectionTitle)
     resultDiv.appendChild(releaseDate)
+    resultDiv.appendChild(previewButton)
 
     searchResults.appendChild(resultDiv)
 }
