@@ -6,6 +6,7 @@ const url = 'https://itunes.apple.com/search?term='
 let searchSubmit = document.querySelector('#search-submit')
 let searchResults = document.querySelector('#results')
 let audioPlayer = document.querySelector('#audio-player-container')
+let container = document.querySelector('.container')
 
 // event listeners
 searchSubmit.addEventListener('submit', (event) => {
@@ -26,7 +27,6 @@ searchSubmit.addEventListener('submit', (event) => {
             }
         })
     }
-    // searchList();
 })
 
 
@@ -36,33 +36,34 @@ searchResults.addEventListener('click', (event) => {
     event.preventDefault();
     console.log('clicked', event)
     console.log(event.target.dataset.songUrl)
+    
+    if (event.target.className === 'preview-button') {
     audioPlayer.src = event.target.dataset.songUrl
     audioPlayer.autoplay = 'true'
-    audioPlayer.volume = .5;    
-    })
+    audioPlayer.volume = .5;
+    displaySong(song)    
+    }
+    else {
+        // do nothing
+    }
+})
+function displaySong(song) {
+    let playerImg = document.createElement('img')
+        playerImg.className = "player-div"
+        playerImg.src = song.artworkUrl100
 
-
-// a failed experiment for now. 
-// function renderAudio(song) {
-//     let audioDiv= document.createElement('div')
-//         audioDiv.className = "audio"
-//         audioDiv.classList.add('hidden')
-        
-//     let audio = document.createElement('audio')
-//         audio.className = 'track-preview'
-//         audio.src = song.previewUrl
-//         audio.controls = true
-
-
-//     audioDiv.appendChild(audio)
-//     audioPlayer.appendChild(audioDiv)
-// }
-// renderAudio()
-
+    container.appendChild(playerImg)
+}
 
 function renderResults(song) {
     let resultDiv = document.createElement('div')
-        resultDiv.className = "results"
+        resultDiv.className = "results-div"
+
+    let trackInfoDiv = document.createElement('div')
+        trackInfoDiv.className = "track-info"
+
+    let trackImgDiv = document.createElement('div')
+        trackImgDiv.className = "track-img"
 
     let audioDiv= document.createElement('div')
         audioDiv.className = "audio"
@@ -97,27 +98,28 @@ function renderResults(song) {
         releaseDate.className = "release-date"
         let releaseYear = new Date(song.releaseDate)
         const options = { year: 'numeric'}
-        releaseDate.innerHTML = "Year: "+releaseYear.toLocaleDateString('de-DE', options);
+        releaseDate.innerHTML = "Year: "+releaseYear.toLocaleDateString('de-De', options);
 
     let previewButton = document.createElement('button')
         previewButton.className = "preview-button"
         previewButton.innerText ='Play Preview'
         previewButton.dataset.songUrl = song.previewUrl
 
-    resultDiv.appendChild(collectionImg)
-    resultDiv.appendChild(artistName)
-    resultDiv.appendChild(songTitle)
-    resultDiv.appendChild(collectionTitle)
-    resultDiv.appendChild(releaseDate)
-    resultDiv.appendChild(previewButton)
+    trackImgDiv.appendChild(collectionImg)
+    trackInfoDiv.appendChild(artistName)
+    trackInfoDiv.appendChild(songTitle)
+    trackInfoDiv.appendChild(collectionTitle)
+    trackInfoDiv.appendChild(releaseDate)
+    trackInfoDiv.appendChild(previewButton)
 
+    resultDiv.appendChild(trackImgDiv)
+    resultDiv.appendChild(trackInfoDiv)
     searchResults.appendChild(resultDiv)
 }
 
 function clearResults() {
-    let songs = document.querySelectorAll('.results')
+    let songs = document.querySelectorAll('.results-div')
     for (let song of songs) {
         song.remove();
     }
 }
-// searchList()
