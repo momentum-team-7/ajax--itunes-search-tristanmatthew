@@ -7,6 +7,8 @@ let searchSubmit = document.querySelector('#search-submit')
 let searchResults = document.querySelector('#results')
 let audioPlayer = document.querySelector('#audio-player-container')
 let container = document.querySelector('.container')
+let playerContainer = document.querySelector('.player-container')
+let imgContainer = document.querySelector('.img-container')
 
 // event listeners
 searchSubmit.addEventListener('submit', (event) => {
@@ -41,18 +43,21 @@ searchResults.addEventListener('click', (event) => {
     audioPlayer.src = event.target.dataset.songUrl
     audioPlayer.autoplay = 'true'
     audioPlayer.volume = .5;
-    displaySong(song)    
+    displaySong()    
     }
     else {
         // do nothing
     }
 })
-function displaySong(song) {
+
+function displaySong() {
+
     let playerImg = document.createElement('img')
         playerImg.className = "player-div"
         playerImg.src = song.artworkUrl100
+        console.log('playerImg', playerImg)
 
-    container.appendChild(playerImg)
+    imgContainer.appendChild(playerImg)
 }
 
 function renderResults(song) {
